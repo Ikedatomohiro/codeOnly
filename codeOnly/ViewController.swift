@@ -73,7 +73,6 @@ class ViewController: UIViewController {
     @objc private func addText() {
         let inputText = textField.text ?? ""
         label.text = inputText + "を記録したよ。"
-//        tableView.reloadData()
         // Firebaseにデータを保存する
         let titleDB = Database.database().reference().child("titles")
         let titleInfo = ["title":inputText]
