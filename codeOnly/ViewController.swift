@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     fileprivate let tableView = UITableView()
     fileprivate let textField = UITextField()
     fileprivate let submitButton = UIButton()
-    
+    let titleDB = Database.database().reference().child("titles")
+
     fileprivate var textArray = [String]()
 
     override func viewDidLoad() {
@@ -74,13 +75,13 @@ class ViewController: UIViewController {
         let inputText = textField.text ?? ""
         label.text = inputText + "を記録したよ。"
         // Firebaseにデータを保存する
-        let titleDB = Database.database().reference().child("titles")
         let titleInfo = ["title":inputText]
         titleDB.childByAutoId().setValue(titleInfo) { (error, result) in
             
             if error != nil {
                 print(error)
             } else {
+
                 print("送信完了！")
             }
         }
@@ -96,7 +97,6 @@ class ViewController: UIViewController {
         fetchDataRef.observe(.childAdded, with: { (snapShot) in
             let snapShotData = snapShot.value as AnyObject
             let title = snapShotData.value(forKey: "title")
-            
             self.textArray.append(title as! String)
             self.tableView.reloadData()
 
@@ -134,6 +134,19 @@ extension ViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    // セルの編集許可
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    // スワイプしたセルを削除
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete { // .deleteでもいいみたい
+            textArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+            print("削除しました")
+        }
+    }
+    
 }
 
 
