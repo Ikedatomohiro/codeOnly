@@ -21,8 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-//        window?.rootViewController = ViewController()
-        window?.rootViewController = navigationController
+//        window?.rootViewController = ViewController() // ナビゲーションバー、タブバーなし
+//        window?.rootViewController = navigationController // ナビゲーションバーのみ
+        window?.rootViewController = TabBarViewController() // ナビゲーションバー、タブバー両方あり
         window?.makeKeyAndVisible()
     }
 

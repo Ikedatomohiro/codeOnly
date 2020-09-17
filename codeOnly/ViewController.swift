@@ -128,8 +128,13 @@ class ViewController: UIViewController {
     // ボタンをタップしたときのアクション
     @objc func tappedRightBarButton() {
         let nextPage = NextViewController()
-        self.navigationController?.pushViewController(nextPage, animated: true)
+        present(nextPage, animated: true, completion: nil)
+//        self.navigationController?.pushViewController(nextPage, animated: true)
     }
+
+    
+
+
 }
 
 extension ViewController: UITableViewDataSource {
@@ -154,7 +159,9 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let nextViewController = NextViewController()
 //        nextViewController.modalPresentationStyle = .fullScreen
-        present(nextViewController, animated: true, completion: nil)
+//        present(nextViewController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+
     }
 }
 extension ViewController: UITextFieldDelegate {

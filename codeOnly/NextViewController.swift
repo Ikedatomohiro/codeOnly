@@ -17,6 +17,8 @@ class NextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .yellow
+        navigationItem.title = "NextView"
+
     }
     
     
