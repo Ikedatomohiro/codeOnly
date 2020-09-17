@@ -14,19 +14,25 @@ class ViewController: UIViewController {
     fileprivate let tableView = UITableView()
     fileprivate let textField = UITextField()
     fileprivate let submitButton = UIButton()
-    let titleDB = Database.database().reference().child("titles")
-
+    fileprivate let titleDB = Database.database().reference().child("titles")
     fileprivate var textArray = [String]()
 
+    fileprivate var leftBarButton: UIBarButtonItem!
+    fileprivate var rightBarButton: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBasic()
         setupBackgroundImageView()
         setupLabel()
         setupTextField()
-        setupButton()
+        setupButtons()
         setupTableView()
         fetchTitleData()
+        
+        self.navigationItem.title = "Top Page"
+
     }
     
     fileprivate func setupBasic() {
@@ -39,7 +45,7 @@ class ViewController: UIViewController {
     }
     fileprivate func setupLabel() {
         view.addSubview(label)
-        label.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0))
+        label.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 80, left: 0, bottom: 0, right: 0))
         label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         label.text = "とりあえずかんたんなやつ"
         label.textColor = .green
@@ -53,12 +59,21 @@ class ViewController: UIViewController {
         textField.backgroundColor = .white
         textField.delegate = self
     }
-    fileprivate func setupButton() {
+    fileprivate func setupButtons() {
         view.addSubview(submitButton)
         submitButton.anchor(top: textField.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 32, left: 0, bottom: 0, right: 0), size: .init(width: 150, height: 50))
         submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         submitButton.setTitle("ボタンですよ", for: UIControl.State.normal)
         submitButton.addTarget(self, action: #selector(addText), for: .touchUpInside)
+        
+        leftBarButton = UIBarButtonItem(title: "< Previous", style: .plain, target: self, action: #selector(ViewController.tappedLeftBarButton))
+        
+        rightBarButton = UIBarButtonItem(title: "Next >", style: .plain, target: self, action: #selector(ViewController.tappedRightBarButton))
+        
+        self.navigationItem.leftBarButtonItem = leftBarButton
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        
+        
     }
     fileprivate func setupTableView() {
         view.addSubview(tableView)
@@ -75,6 +90,7 @@ class ViewController: UIViewController {
         let inputText = textField.text ?? ""
         label.text = inputText + "を記録したよ。"
         // Firebaseにデータを保存する
+        
         let titleInfo = ["title":inputText]
         titleDB.childByAutoId().setValue(titleInfo) { (error, result) in
             
@@ -101,6 +117,18 @@ class ViewController: UIViewController {
             self.tableView.reloadData()
 
         }, withCancel: nil)
+    }
+    
+    // ボタンをタップしたときのアクション
+    @objc func tappedLeftBarButton() {
+//        let previousPage = PreviousViewController()
+//        self.navigationController?.pushViewController(previousPage, animated: true)
+    }
+
+    // ボタンをタップしたときのアクション
+    @objc func tappedRightBarButton() {
+        let nextPage = NextViewController()
+        self.navigationController?.pushViewController(nextPage, animated: true)
     }
 }
 
@@ -148,5 +176,3 @@ extension ViewController: UITextFieldDelegate {
     }
     
 }
-
-
