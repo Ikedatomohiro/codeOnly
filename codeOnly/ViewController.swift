@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     }
     fileprivate func setupLabel() {
         view.addSubview(label)
-        label.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 80, left: 0, bottom: 0, right: 0))
+        label.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 80, left: 0, bottom: 0, right: 0))
         label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         label.text = "とりあえずかんたんなやつ"
         label.textColor = .green
