@@ -82,7 +82,7 @@ class ViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.className) // ←これはなんだ？？
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell") // ←これはなんだ？？
     }
     
     // ボタンをクリックしたときのアクション
@@ -146,6 +146,7 @@ extension ViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？
+        let cell = UITableViewCell()
         cell.textLabel?.text = textArray[indexPath.row]
         cell.selectionStyle = .none
         return cell
@@ -157,11 +158,24 @@ extension ViewController: UITableViewDataSource {
 }
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nextViewController = NextViewController()
+        let nextViewController = NextViewController(t: textArray[indexPath.row])
 //        nextViewController.modalPresentationStyle = .fullScreen
 //        present(nextViewController, animated: true, completion: nil)
+        nextViewController.setup(user: User(id: 0, name: "text"))
         self.navigationController?.pushViewController(nextViewController, animated: true)
 
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        <#code#>
     }
 }
 extension ViewController: UITextFieldDelegate {
