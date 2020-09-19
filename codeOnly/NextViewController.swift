@@ -43,20 +43,3 @@ struct User {
 //        self.name = name
 //    }
 }
-
-
-
-UIStackView
-UIImageView
-
-UICollectionView
-
-UIPageViewController
-
-UIRefreshControl
-
-UISwitch
-UISlider
-UISearchController
-
-FirebaseAuth

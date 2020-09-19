@@ -82,7 +82,7 @@ class ViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell") // ←これはなんだ？？
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.className) // ←これはなんだ？？
     }
     
     // ボタンをクリックしたときのアクション
@@ -127,8 +127,8 @@ class ViewController: UIViewController {
 
     // ボタンをタップしたときのアクション
     @objc func tappedRightBarButton() {
-        let nextPage = NextViewController()
-        present(nextPage, animated: true, completion: nil)
+//        let nextPage = NextViewController()
+//        present(nextPage, animated: true, completion: nil)
 //        self.navigationController?.pushViewController(nextPage, animated: true)
     }
 
@@ -145,8 +145,7 @@ extension ViewController: UITableViewDataSource {
         return textArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？
-        let cell = UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
         cell.textLabel?.text = textArray[indexPath.row]
         cell.selectionStyle = .none
         return cell
@@ -161,22 +160,19 @@ extension ViewController: UITableViewDelegate {
         let nextViewController = NextViewController(t: textArray[indexPath.row])
 //        nextViewController.modalPresentationStyle = .fullScreen
 //        present(nextViewController, animated: true, completion: nil)
-        nextViewController.setup(user: User(id: 0, name: "text"))
+//        nextViewController.setup(user: User(id: 0, name: "text"))
         self.navigationController?.pushViewController(nextViewController, animated: true)
 
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        <#code#>
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        <#code#>
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        <#code#>
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//    }
+//
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//    }
 }
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
