@@ -8,18 +8,19 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 class ViewController: UIViewController {
     fileprivate let label = UILabel()
     fileprivate let tableView = UITableView()
     fileprivate let textField = UITextField()
     fileprivate let submitButton = UIButton()
-    fileprivate let titleDB = Database.database().reference().child("titles")
+//    fileprivate let titleDB = Database.database().reference().child("titles") // realtime databaseの定義
+    fileprivate let db = Firestore.firestore()
+    fileprivate var docRef: DocumentReference? = nil
     fileprivate var textArray = [String]()
-
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var rightBarButton: UIBarButtonItem!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,41 +83,57 @@ class ViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.className) // ←これはなんだ？？
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.className) // ←
     }
     
     // ボタンをクリックしたときのアクション
     @objc private func addText() {
         let inputText = textField.text ?? ""
-        label.text = inputText + "を記録したよ。"
-        // Firebaseにデータを保存する
-        
-        let titleInfo = ["title":inputText]
-        titleDB.childByAutoId().setValue(titleInfo) { (error, result) in
-            
-            if error != nil {
-                print(error)
-            } else {
+        // Firestoreにデータを保存する
+        if inputText != "" {
+            label.text = inputText + "を記録したよ。"
+            // Firestoreにデータを保存する
 
-                print("送信完了！")
+            // 自動的にランダムな文字列のIDを生成してデータ登録する。
+            docRef = db.collection("titles").addDocument(data: ["title": inputText]) { err in
+                if let err = err {
+                    print("Error adding document: \(err)")
+                } else {
+                    print("Document added with ID: \(self.docRef!.documentID)")
+                }
             }
+            textField.text = ""
+        } else {
+            label.text = "なにか文字を入れてね。"
         }
-        textField.text = ""
     }
     
     // データを取得する
     func fetchTitleData() {
         // Firebaseからデータを取得
-        let fetchDataRef = Database.database().reference().child("titles")
+//        let fetchDataRef = Database.database().reference().child("titles")
         
         // 新しく更新があったときに取得する
-        fetchDataRef.observe(.childAdded, with: { (snapShot) in
-            let snapShotData = snapShot.value as AnyObject
-            let title = snapShotData.value(forKey: "title")
-            self.textArray.append(title as! String)
-            self.tableView.reloadData()
-
-        }, withCancel: nil)
+//        fetchDataRef.observe(.childAdded, with: { (snapShot) in
+//            let snapShotData = snapShot.value as AnyObject
+//            let title = snapShotData.value(forKey: "title")
+//            self.textArray.append(title as! String)
+//            self.tableView.reloadData()
+//
+//        }, withCancel: nil)
+        
+        db.collection("titles").getDocuments() {(querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data()["title"]!)")
+                    
+                    self.textArray.append(document.data()["title"] as! String)
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
     // ボタンをタップしたときのアクション

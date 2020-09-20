@@ -12,6 +12,7 @@ target 'codeOnly' do
 	pod 'Firebase/Auth'
 	pod 'Firebase/Database'
 	pod 'Firebase/Firestore'
+	pod 'FirebaseFirestoreSwift'
 	pod 'lottie-ios'
 	pod 'ChameleonFramework'
 # add pods for desired Firebase products
