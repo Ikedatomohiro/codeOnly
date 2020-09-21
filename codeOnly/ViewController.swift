@@ -144,6 +144,7 @@ class ViewController: UIViewController {
 
     // ボタンをタップしたときのアクション
     @objc func tappedRightBarButton() {
+//        let nextPage = NextViewController.self
 //        let nextPage = NextViewController()
 //        present(nextPage, animated: true, completion: nil)
 //        self.navigationController?.pushViewController(nextPage, animated: true)
@@ -174,12 +175,25 @@ extension ViewController: UITableViewDataSource {
 }
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nextViewController = NextViewController(t: textArray[indexPath.row])
+        // 次のページにデータを送信する
+        let nextViewController = NextViewController(titleText: textArray[indexPath.row])
 //        nextViewController.modalPresentationStyle = .fullScreen
 //        present(nextViewController, animated: true, completion: nil)
 //        nextViewController.setup(user: User(id: 0, name: "text"))
         self.navigationController?.pushViewController(nextViewController, animated: true)
 
+    }
+    // セルの編集許可
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    // スワイプしたセルを削除
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete { // .deleteでもいいみたい
+            textArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+            print("削除しました")
+        }
     }
     
 //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -196,17 +210,6 @@ extension ViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    // セルの編集許可
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    // スワイプしたセルを削除
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCell.EditingStyle.delete { // .deleteでもいいみたい
-            textArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
-            print("削除しました")
-        }
-    }
+
     
 }
