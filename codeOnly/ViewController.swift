@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 //    fileprivate let titleDB = Database.database().reference().child("titles") // realtime databaseの定義
     fileprivate let db = Firestore.firestore()
     fileprivate var docRef: DocumentReference? = nil
-    fileprivate var textArray = [String]()
+    fileprivate var titlesArray = [String]()
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var rightBarButton: UIBarButtonItem!
     
@@ -93,13 +93,13 @@ class ViewController: UIViewController {
         if inputText != "" {
             label.text = inputText + "を記録したよ。"
             // Firestoreにデータを保存する
-
+            titlesArray.append(inputText)
             // 自動的にランダムな文字列のIDを生成してデータ登録する。
-            docRef = db.collection("titles").addDocument(data: ["title": inputText]) { err in
+            db.collection("topics").document(inputText).setData(["title": inputText]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")
                 } else {
-                    print("Document added with ID: \(self.docRef!.documentID)")
+                    print("save OK")
                 }
             }
             textField.text = ""
@@ -109,6 +109,7 @@ class ViewController: UIViewController {
     }
     
     // データを取得する
+    
     func fetchTitleData() {
         // Firebaseからデータを取得
 //        let fetchDataRef = Database.database().reference().child("titles")
@@ -117,19 +118,18 @@ class ViewController: UIViewController {
 //        fetchDataRef.observe(.childAdded, with: { (snapShot) in
 //            let snapShotData = snapShot.value as AnyObject
 //            let title = snapShotData.value(forKey: "title")
-//            self.textArray.append(title as! String)
+//            self.titlesArray.append(title as! String)
 //            self.tableView.reloadData()
 //
 //        }, withCancel: nil)
         
-        db.collection("titles").getDocuments() {(querySnapshot, err) in
+        db.collection("topics").getDocuments() {(querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
                     print("\(document.documentID) => \(document.data()["title"]!)")
-                    
-                    self.textArray.append(document.data()["title"] as! String)
+                    self.titlesArray.append(document.data()["title"] as! String)
                     self.tableView.reloadData()
                 }
             }
@@ -160,11 +160,11 @@ extension ViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return textArray.count
+        return titlesArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
-        cell.textLabel?.text = textArray[indexPath.row]
+        cell.textLabel?.text = titlesArray[indexPath.row]
         cell.selectionStyle = .none
         return cell
     }
@@ -176,7 +176,7 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 次のページにデータを送信する
-        let nextViewController = NextViewController(titleText: textArray[indexPath.row])
+        let nextViewController = NextViewController(titleText: titlesArray[indexPath.row])
 //        nextViewController.modalPresentationStyle = .fullScreen
 //        present(nextViewController, animated: true, completion: nil)
 //        nextViewController.setup(user: User(id: 0, name: "text"))
@@ -190,7 +190,7 @@ extension ViewController: UITableViewDelegate {
     // スワイプしたセルを削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete { // .deleteでもいいみたい
-            textArray.remove(at: indexPath.row)
+            titlesArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
             print("削除しました")
         }

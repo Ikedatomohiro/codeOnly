@@ -11,13 +11,13 @@ import UIKit
 class NextViewController: UIViewController {
 
     fileprivate var titleText: String?
-    fileprivate var label = UILabel()
     fileprivate var titleTextField = UITextField()
+    fileprivate var commentTextView = UITextView()
+    fileprivate var topicSubmitButton = UIButton()
     
     init(titleText: String?) {
         self.titleText = titleText
         super.init(nibName: nil, bundle: nil)
-        label.text = titleText
         print(titleText as Any)
     }
     required init?(coder: NSCoder) {
@@ -27,26 +27,43 @@ class NextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .yellow
-        setupLabel()
         setupTextField()
+        setupCommentTextView()
+        setupTopicSubmitButton()
         navigationItem.title = "NextView"
-    }
-    
-    func setupLabel() {
-        view.addSubview(label)
-        label.text = titleText
-        label.textColor = .blue
-        label.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 80, left: 0, bottom: 0, right: 0))
     }
     
     func setupTextField() {
         view.addSubview(titleTextField)
         titleTextField.text = titleText
-        titleTextField.anchor(top: label.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 150, height: 30))
+        titleTextField.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 12, left: 10, bottom: 0, right: 0), size: .init(width: 150, height: 30))
         titleTextField.backgroundColor = .white
         
         
     }
+    
+    func setupCommentTextView() {
+        view.addSubview(commentTextView)
+        commentTextView.anchor(top: titleTextField.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 10), size: .init(width: 200, height: 100))
+        commentTextView.backgroundColor = .white
+    }
+    
+    func setupTopicSubmitButton() {
+        view.addSubview(topicSubmitButton)
+        topicSubmitButton.anchor(top: commentTextView.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 0), size: .init(width: 30, height: 30))
+        topicSubmitButton.backgroundColor = .green
+        topicSubmitButton.setTitle("更新", for: UIControl.State.normal)
+        topicSubmitButton.addTarget(self, action: #selector(updateTopic), for: .touchUpInside)
+        
+        
+    }
+    
+    @objc func updateTopic() {
+        
+        
+        
+    }
+    
     
     func setup(user: User) {
         
