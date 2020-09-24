@@ -50,7 +50,7 @@ class NextViewController: UIViewController {
     
     func setupTopicSubmitButton() {
         view.addSubview(topicSubmitButton)
-        topicSubmitButton.anchor(top: commentTextView.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 0), size: .init(width: 30, height: 30))
+        topicSubmitButton.anchor(top: commentTextView.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 0), size: .init(width: 100, height: 30))
         topicSubmitButton.backgroundColor = .green
         topicSubmitButton.setTitle("更新", for: UIControl.State.normal)
         topicSubmitButton.addTarget(self, action: #selector(updateTopic), for: .touchUpInside)

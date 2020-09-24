@@ -88,13 +88,17 @@ class ViewController: UIViewController {
     
     // ボタンをクリックしたときのアクション
     @objc private func addText() {
+        setTitle()
+    }
+    
+    func setTitle() {
         let inputText = textField.text ?? ""
         // Firestoreにデータを保存する
         if inputText != "" {
             label.text = inputText + "を記録したよ。"
-            // Firestoreにデータを保存する
+            // 配列に値を追加
             titlesArray.append(inputText)
-            // 自動的にランダムな文字列のIDを生成してデータ登録する。
+            // Firestoreにデータを保存する
             db.collection("topics").document(inputText).setData(["title": inputText]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")
@@ -103,26 +107,14 @@ class ViewController: UIViewController {
                 }
             }
             textField.text = ""
+            tableView.reloadData()
         } else {
             label.text = "なにか文字を入れてね。"
         }
     }
     
     // データを取得する
-    
     func fetchTitleData() {
-        // Firebaseからデータを取得
-//        let fetchDataRef = Database.database().reference().child("titles")
-        
-        // 新しく更新があったときに取得する
-//        fetchDataRef.observe(.childAdded, with: { (snapShot) in
-//            let snapShotData = snapShot.value as AnyObject
-//            let title = snapShotData.value(forKey: "title")
-//            self.titlesArray.append(title as! String)
-//            self.tableView.reloadData()
-//
-//        }, withCancel: nil)
-        
         db.collection("topics").getDocuments() {(querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -134,6 +126,16 @@ class ViewController: UIViewController {
                 }
             }
         }
+        // 新しく更新があったときにデータを取得する
+//        db.collection("topics").addSnapshotListener{ querySnapshot, error in
+//            guard let documents = querySnapshot?.documents else {
+//                print("Error fetching documents: \(error!)")
+//                return
+//            }
+//            let titles = documents.map { $0["title"]! }
+//            print("Current cities in CA: \(titles)")
+//        }
+        
     }
     
     // ボタンをタップしたときのアクション
@@ -207,6 +209,8 @@ extension ViewController: UITableViewDelegate {
 }
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        setTitle()
+        // キーボードを閉じる
         textField.resignFirstResponder()
         return true
     }
