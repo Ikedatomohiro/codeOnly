@@ -14,6 +14,7 @@ class NextViewController: UIViewController {
     fileprivate var titleTextField = UITextField()
     fileprivate var commentTextView = UITextView()
     fileprivate var topicSubmitButton = UIButton()
+    fileprivate let stackView = UIStackView()
     
     init(titleText: String?) {
         self.titleText = titleText
@@ -30,32 +31,50 @@ class NextViewController: UIViewController {
         setupTextField()
         setupCommentTextView()
         setupTopicSubmitButton()
+        setupStackView()
         navigationItem.title = "NextView"
     }
     
     func setupTextField() {
         view.addSubview(titleTextField)
         titleTextField.text = titleText
-        titleTextField.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 12, left: 10, bottom: 0, right: 0), size: .init(width: 150, height: 30))
+        titleTextField.frame = CGRect(x: 0 , y: 20 , width: 200, height: 100)
+
+//        titleTextField.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 12, left: 10, bottom: 0, right: 0), size: .init(width: 150, height: 30))
         titleTextField.backgroundColor = .white
-        
-        
     }
     
     func setupCommentTextView() {
         view.addSubview(commentTextView)
-        commentTextView.anchor(top: titleTextField.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 10), size: .init(width: 200, height: 100))
+        commentTextView.frame = CGRect(x: 0 , y: 20 , width: 200, height: 200)
+
+//        commentTextView.anchor(top: titleTextField.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 10), size: .init(width: 200, height: 100))
         commentTextView.backgroundColor = .white
     }
     
     func setupTopicSubmitButton() {
         view.addSubview(topicSubmitButton)
-        topicSubmitButton.anchor(top: commentTextView.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 0), size: .init(width: 100, height: 30))
+//        topicSubmitButton.anchor(top: commentTextView.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 0), size: .init(width: 100, height: 30))
         topicSubmitButton.backgroundColor = .green
         topicSubmitButton.setTitle("更新", for: UIControl.State.normal)
         topicSubmitButton.addTarget(self, action: #selector(updateTopic), for: .touchUpInside)
         
         
+    }
+    
+    func setupStackView() {
+        view.addSubview(stackView)
+        stackView.axis = .vertical
+        
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.spacing = 2
+        
+        
+        stackView.addArrangedSubview(titleTextField)
+        stackView.addArrangedSubview(commentTextView)
+        stackView.addArrangedSubview(topicSubmitButton)
+
     }
     
     @objc func updateTopic() {

@@ -73,8 +73,6 @@ class ViewController: UIViewController {
         
         self.navigationItem.leftBarButtonItem = leftBarButton
         self.navigationItem.rightBarButtonItem = rightBarButton
-        
-        
     }
     fileprivate func setupTableView() {
         view.addSubview(tableView)
@@ -146,10 +144,9 @@ class ViewController: UIViewController {
 
     // ボタンをタップしたときのアクション
     @objc func tappedRightBarButton() {
-//        let nextPage = NextViewController.self
-//        let nextPage = NextViewController()
-//        present(nextPage, animated: true, completion: nil)
-//        self.navigationController?.pushViewController(nextPage, animated: true)
+        let stackVC = StackViewController()
+//        present(stackVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(stackVC, animated: true)
     }
 
     
