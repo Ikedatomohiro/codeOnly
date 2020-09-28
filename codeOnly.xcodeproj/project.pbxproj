@@ -20,6 +20,7 @@
 		E5849EE624F54CA800103260 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5849EE424F54CA800103260 /* LaunchScreen.storyboard */; };
 		E5849EEE24F6A82100103260 /* NextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5849EED24F6A82100103260 /* NextViewController.swift */; };
 		E5941613251F0BB1006A0632 /* StackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5941612251F0BB1006A0632 /* StackViewController.swift */; };
+		E5941617251F8D2F006A0632 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5941616251F8D2F006A0632 /* CollectionViewController.swift */; };
 		E5B13B2A25139A6F003DDD34 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B13B2925139A6E003DDD34 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		E5849EE724F54CA800103260 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5849EED24F6A82100103260 /* NextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextViewController.swift; sourceTree = "<group>"; };
 		E5941612251F0BB1006A0632 /* StackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
+		E5941616251F8D2F006A0632 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		E5B13B2925139A6E003DDD34 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +126,7 @@
 				E571010E25066A2A00E6FA4C /* GoogleService-Info.plist */,
 				C57E9BAF24FE68F0005AD40B /* LayoutController.swift */,
 				E5941612251F0BB1006A0632 /* StackViewController.swift */,
+				E5941616251F8D2F006A0632 /* CollectionViewController.swift */,
 			);
 			path = codeOnly;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				E5941613251F0BB1006A0632 /* StackViewController.swift in Sources */,
 				C57E9BB324FE73BB005AD40B /* Anchor.swift in Sources */,
 				E5849EDC24F54CA600103260 /* SceneDelegate.swift in Sources */,
+				E5941617251F8D2F006A0632 /* CollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
