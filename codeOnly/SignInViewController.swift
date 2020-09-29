@@ -85,10 +85,10 @@ class SignInViewController: UIViewController {
     @objc func SignIn() {
         print("ログインします。")
         if emailTextField.text != nil && passwordTextField.text != nil {
-//            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { authResult, error in
-//                    print("ログイン成功！")
-//                }
-//            }
+            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { [weak self] authResult, error in
+//              guard let strongSelf = self else { return }
+                    print("ログイン成功！")
+                }
         }
 
     }
