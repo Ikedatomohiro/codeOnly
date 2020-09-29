@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
-import FirebaseAuth
 
 class ViewController: UIViewController {
     fileprivate let label = UILabel()
@@ -23,12 +22,6 @@ class ViewController: UIViewController {
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var rightBarButton: UIBarButtonItem!
     
-    fileprivate let users: [User] = [
-        User(0),
-        User(1),
-        User(2),
-    ]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBasic()
@@ -40,6 +33,7 @@ class ViewController: UIViewController {
         fetchTitleData()
         
         self.navigationItem.title = "Top Page"
+
     }
     
     fileprivate func setupBasic() {
@@ -96,7 +90,6 @@ class ViewController: UIViewController {
     }
     
     func setTitle() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
         let inputText = textField.text ?? ""
         // Firestoreにデータを保存する
         if inputText != "" {
@@ -104,28 +97,14 @@ class ViewController: UIViewController {
             // 配列に値を追加
             titlesArray.append(inputText)
             // Firestoreにデータを保存する
-            Uselr.usersRef.document(uid).collection("topics").addDocument(data: ["title": inputText])
-            
-            Firestore.firestore().collection("users").getDocuments { (querySnapshot, error) in
-                let documents = querySnapshot?.documents
-                documents!.map { $0.documentID }
-                documents -> [User]
-                
-                user
-                Firestore.firestore().collection("users").document("").updateData(<#T##fields: [AnyHashable : Any]##[AnyHashable : Any]#>)
-                
-                
+            db.collection("topics").document(inputText).setData(["title": inputText]) { err in
+                if let err = err {
+                    print("Error adding document: \(err)")
+                } else {
+                    print("save OK")
+                }
             }
-            
-//            db.collection("users").document(<#T##documentPath: String##String#>)
-//            db.collection("topics").document(inputText).setData(["title": inputText]) { err in
-//                if let err = err {
-//                    print("Error adding document: \(err)")
-//                } else {
-//                    print("save OK")
-//                }
-//            }
-//            textField.text = ""
+            textField.text = ""
             tableView.reloadData()
         } else {
             label.text = "なにか文字を入れてね。"
@@ -185,7 +164,6 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
         cell.textLabel?.text = titlesArray[indexPath.row]
-        users[indexPath.row]
         cell.selectionStyle = .none
         return cell
     }

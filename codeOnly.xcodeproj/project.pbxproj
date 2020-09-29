@@ -11,7 +11,6 @@
 		C57E9BB024FE68F0005AD40B /* LayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E9BAF24FE68F0005AD40B /* LayoutController.swift */; };
 		C57E9BB324FE73BB005AD40B /* Anchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E9BB224FE73BB005AD40B /* Anchor.swift */; };
 		C57E9BB524FE743B005AD40B /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E9BB424FE743B005AD40B /* NSObject.swift */; };
-		C58F36FB252354EF0033FABA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F36FA252354EF0033FABA /* User.swift */; };
 		E571010F25066A2A00E6FA4C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E571010E25066A2A00E6FA4C /* GoogleService-Info.plist */; };
 		E571011225066C1E00E6FA4C /* Titles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571011125066C1E00E6FA4C /* Titles.swift */; };
 		E5849EDA24F54CA600103260 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5849ED924F54CA600103260 /* AppDelegate.swift */; };
@@ -32,7 +31,6 @@
 		C57E9BAF24FE68F0005AD40B /* LayoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutController.swift; sourceTree = "<group>"; };
 		C57E9BB224FE73BB005AD40B /* Anchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anchor.swift; sourceTree = "<group>"; };
 		C57E9BB424FE743B005AD40B /* NSObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject.swift; sourceTree = "<group>"; };
-		C58F36FA252354EF0033FABA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D9626C15E5853C1819AB6FD8 /* Pods-codeOnly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-codeOnly.release.xcconfig"; path = "Target Support Files/Pods-codeOnly/Pods-codeOnly.release.xcconfig"; sourceTree = "<group>"; };
 		E571010E25066A2A00E6FA4C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E571011125066C1E00E6FA4C /* Titles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Titles.swift; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 				E5941612251F0BB1006A0632 /* StackViewController.swift */,
 				E5941616251F8D2F006A0632 /* CollectionViewController.swift */,
 				E5C7C5242522AA32008BD99B /* SignInViewController.swift */,
-				C58F36FA252354EF0033FABA /* User.swift */,
 			);
 			path = codeOnly;
 			sourceTree = "<group>";
@@ -252,7 +249,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C58F36FB252354EF0033FABA /* User.swift in Sources */,
 				C57E9BB024FE68F0005AD40B /* LayoutController.swift in Sources */,
 				E5849EDE24F54CA600103260 /* ViewController.swift in Sources */,
 				E5849EEE24F6A82100103260 /* NextViewController.swift in Sources */,
