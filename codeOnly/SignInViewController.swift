@@ -16,6 +16,7 @@ class SignInViewController: UIViewController {
     fileprivate var passwordTextField = UITextField()
     fileprivate let signUpButton = UIButton()
     fileprivate let signInButton = UIButton()
+    fileprivate var resultLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,19 +79,26 @@ class SignInViewController: UIViewController {
                 Firestore.firestore().collection("users").document(uid).setData([:])
             }
         }
+        setResultLabel()
+        resultLabel.text = "新規登録完了しました"
 
     }
     @objc func SignIn() {
         print("ログインします。")
         if emailTextField.text != nil && passwordTextField.text != nil {
-            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { [weak self] authResult, error in
+            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { authResult, error in
 //              guard let strongSelf = self else { return }
                     print("ログイン成功！")
                 }
         }
-
+        setResultLabel()
+        resultLabel.text = "ログインしました"
     }
 
+    func setResultLabel() {
+        view.addSubview(resultLabel)
+        resultLabel.anchor(top: signInButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 30, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 30))
+    }
 
     /*
     // MARK: - Navigation

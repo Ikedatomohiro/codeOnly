@@ -124,14 +124,14 @@
 				E5849EDD24F54CA600103260 /* ViewController.swift */,
 				E5849EED24F6A82100103260 /* NextViewController.swift */,
 				E5B13B2925139A6E003DDD34 /* TabBarViewController.swift */,
+				C57E9BAF24FE68F0005AD40B /* LayoutController.swift */,
+				E5941616251F8D2F006A0632 /* CollectionViewController.swift */,
+				E5941612251F0BB1006A0632 /* StackViewController.swift */,
+				E5C7C5242522AA32008BD99B /* SignInViewController.swift */,
 				E5849EE224F54CA800103260 /* Assets.xcassets */,
 				E5849EE424F54CA800103260 /* LaunchScreen.storyboard */,
 				E5849EE724F54CA800103260 /* Info.plist */,
 				E571010E25066A2A00E6FA4C /* GoogleService-Info.plist */,
-				C57E9BAF24FE68F0005AD40B /* LayoutController.swift */,
-				E5941612251F0BB1006A0632 /* StackViewController.swift */,
-				E5941616251F8D2F006A0632 /* CollectionViewController.swift */,
-				E5C7C5242522AA32008BD99B /* SignInViewController.swift */,
 				C58F36FA252354EF0033FABA /* User.swift */,
 			);
 			path = codeOnly;

@@ -8,7 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
-
+// import Firebase と記載すればFirebaseFirestoreもFirebaseFirebaseAuthも取り込んでくれる。ときどきうまく行かない時があるらしく、そのときは個別で読み込む。
 class NextViewController: UIViewController {
 
     fileprivate var titleText: String?
@@ -18,7 +18,7 @@ class NextViewController: UIViewController {
     fileprivate var messageText = UITextField()
     fileprivate let db = Firestore.firestore()
     
-    fileprivate let user: User
+//    fileprivate let user: User        userモデルを作ると呼び出しやすい
 
     init(titleText: String?) {
         self.titleText = titleText
@@ -91,20 +91,19 @@ class NextViewController: UIViewController {
         messageText.anchor(top: topicSubmitButton.layoutMarginsGuide.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 20, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 20))
     }
     
-    func setup(user: User) {
-        
-    }
+//    func setup(user: User) { userモデルを作ると呼び出しやすい
+//    }
 }
 
-struct User {
-    var id: Int
-    var name: String
-    
+//struct User {
+//    var id: Int
+//    var name: String
+//
 //    init(id: Int, name: String) {
 //        self.id = id
 //        self.name = name
 //    }
-}
+//}
 
 extension NextViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
