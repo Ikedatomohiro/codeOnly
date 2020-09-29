@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Firebase
-
+import FirebaseAuth
+import FirebaseFirestore
 class SignInViewController: UIViewController {
 
     fileprivate let signInStackView = UIStackView()
@@ -23,7 +23,7 @@ class SignInViewController: UIViewController {
         serupTextField()
         setupSignUpButton()
         setupSignInButton()
-
+        
     }
     fileprivate func setupBasic() {
         view.backgroundColor = .cyan
@@ -73,11 +73,9 @@ class SignInViewController: UIViewController {
         print("登録します。")
         if emailTextField.text != nil && passwordTextField.text != nil {
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authResult, error) in
-                if let error = error {
-                    print(error)
-                } else {
-                    print("新規登録成功！")
-                }
+                guard error == nil else { return }
+                guard let uid = authResult?.user.uid else { return }
+                Firestore.firestore().collection("users").document(uid).setData([:])
             }
         }
 

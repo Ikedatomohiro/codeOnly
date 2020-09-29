@@ -17,6 +17,8 @@ class NextViewController: UIViewController {
     fileprivate var topicSubmitButton = UIButton()
     fileprivate var messageText = UITextField()
     fileprivate let db = Firestore.firestore()
+    
+    fileprivate let user: User
 
     init(titleText: String?) {
         self.titleText = titleText
@@ -36,6 +38,7 @@ class NextViewController: UIViewController {
         setupMessageTextField()
         setTopicData()
         navigationItem.title = "NextView"
+        
     }
     
     func setupTextField() {
