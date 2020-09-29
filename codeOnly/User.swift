@@ -11,5 +11,7 @@ import FirebaseFirestore
 
 class Uselr {
     static var usersRef = Firestore.firestore().collection("users")
-    // idやnameなどのフィールドを設計しておく
+    
+    id
+    name
 }

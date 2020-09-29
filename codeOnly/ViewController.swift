@@ -23,11 +23,11 @@ class ViewController: UIViewController {
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var rightBarButton: UIBarButtonItem!
     
-//    fileprivate let users: [User] = [　　　　　　　　userモデルに必要な情報をセットする
-//        User(0),
-//        User(1),
-//        User(2),
-//    ]
+    fileprivate let users: [User] = [
+        User(0),
+        User(1),
+        User(2),
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,19 +104,18 @@ class ViewController: UIViewController {
             // 配列に値を追加
             titlesArray.append(inputText)
             // Firestoreにデータを保存する
-//            Uselr.usersRef.document(uid).collection("topics").addDocument(data: ["title": inputText])
+            Uselr.usersRef.document(uid).collection("topics").addDocument(data: ["title": inputText])
             
-//            Firestore.firestore().collection("users").getDocuments { (querySnapshot, error) in
-//                let documents = querySnapshot?.documents
-//                documents!.map { $0.documentID } $0 はdocument -> なになにの省略形
-//                documents -> [User]
-// Firestoreからドキュメントを呼び出す
-// Firestoreから必要な情報をすべて呼び出してしまうか、IDをuserモデルにも持たせておいて各ページで必要なときにFirestoreにリクエストする
-//                user
-//                Firestore.firestore().collection("users").document("").updateData(<#T##fields: [AnyHashable : Any]##[AnyHashable : Any]#>)
-//
-//
-//            }
+            Firestore.firestore().collection("users").getDocuments { (querySnapshot, error) in
+                let documents = querySnapshot?.documents
+                documents!.map { $0.documentID }
+                documents -> [User]
+                
+                user
+                Firestore.firestore().collection("users").document("").updateData(<#T##fields: [AnyHashable : Any]##[AnyHashable : Any]#>)
+                
+                
+            }
             
 //            db.collection("users").document(<#T##documentPath: String##String#>)
 //            db.collection("topics").document(inputText).setData(["title": inputText]) { err in
@@ -126,7 +125,7 @@ class ViewController: UIViewController {
 //                    print("save OK")
 //                }
 //            }
-            textField.text = ""
+//            textField.text = ""
             tableView.reloadData()
         } else {
             label.text = "なにか文字を入れてね。"
@@ -186,7 +185,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
         cell.textLabel?.text = titlesArray[indexPath.row]
-//        users[indexPath.row]     userモデルがcellに入れる情報と順番が同じなので各セルにデータを入れておける
+        users[indexPath.row]
         cell.selectionStyle = .none
         return cell
     }
