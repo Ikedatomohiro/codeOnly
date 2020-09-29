@@ -22,6 +22,7 @@
 		E5941613251F0BB1006A0632 /* StackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5941612251F0BB1006A0632 /* StackViewController.swift */; };
 		E5941617251F8D2F006A0632 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5941616251F8D2F006A0632 /* CollectionViewController.swift */; };
 		E5B13B2A25139A6F003DDD34 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B13B2925139A6E003DDD34 /* TabBarViewController.swift */; };
+		E5C7C5252522AA32008BD99B /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7C5242522AA32008BD99B /* SignInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		E5941612251F0BB1006A0632 /* StackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
 		E5941616251F8D2F006A0632 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		E5B13B2925139A6E003DDD34 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		E5C7C5242522AA32008BD99B /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				C57E9BAF24FE68F0005AD40B /* LayoutController.swift */,
 				E5941612251F0BB1006A0632 /* StackViewController.swift */,
 				E5941616251F8D2F006A0632 /* CollectionViewController.swift */,
+				E5C7C5242522AA32008BD99B /* SignInViewController.swift */,
 			);
 			path = codeOnly;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				E571011225066C1E00E6FA4C /* Titles.swift in Sources */,
 				E5849EDA24F54CA600103260 /* AppDelegate.swift in Sources */,
 				E5941613251F0BB1006A0632 /* StackViewController.swift in Sources */,
+				E5C7C5252522AA32008BD99B /* SignInViewController.swift in Sources */,
 				C57E9BB324FE73BB005AD40B /* Anchor.swift in Sources */,
 				E5849EDC24F54CA600103260 /* SceneDelegate.swift in Sources */,
 				E5941617251F8D2F006A0632 /* CollectionViewController.swift in Sources */,

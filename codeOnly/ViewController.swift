@@ -67,9 +67,9 @@ class ViewController: UIViewController {
         submitButton.setTitle("ボタンですよ", for: UIControl.State.normal)
         submitButton.addTarget(self, action: #selector(addText), for: .touchUpInside)
         
-        leftBarButton = UIBarButtonItem(title: "< Previous", style: .plain, target: self, action: #selector(ViewController.tappedLeftBarButton))
+        leftBarButton = UIBarButtonItem(title: "Sign In", style: .plain, target: self, action: #selector(ViewController.tappedLeftBarButton))
         
-        rightBarButton = UIBarButtonItem(title: "Next >", style: .plain, target: self, action: #selector(ViewController.tappedRightBarButton))
+        rightBarButton = UIBarButtonItem(title: "Stack", style: .plain, target: self, action: #selector(ViewController.tappedRightBarButton))
         
         self.navigationItem.leftBarButtonItem = leftBarButton
         self.navigationItem.rightBarButtonItem = rightBarButton
@@ -138,8 +138,8 @@ class ViewController: UIViewController {
     
     // ボタンをタップしたときのアクション
     @objc func tappedLeftBarButton() {
-//        let previousPage = PreviousViewController()
-//        self.navigationController?.pushViewController(previousPage, animated: true)
+        let signInPage = SignInViewController()
+        self.navigationController?.pushViewController(signInPage, animated: true)
     }
 
     // ボタンをタップしたときのアクション

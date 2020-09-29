@@ -37,7 +37,6 @@ class StackViewController: UIViewController {
     
     func setLabels() {
         view.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
 //        stackView.distribution = .fillEqually
 //        stackView.alignment = .fill
         stackView.spacing = 10.0
