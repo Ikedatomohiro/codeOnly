@@ -21,7 +21,9 @@ class ViewController: UIViewController {
     fileprivate var titlesArray = [String]()
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var rightBarButton: UIBarButtonItem!
-    
+    fileprivate var handle:AuthStateDidChangeListenerHandle?
+    fileprivate var userId:String? = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBasic()
@@ -34,6 +36,12 @@ class ViewController: UIViewController {
         
         self.navigationItem.title = "Top Page"
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        handle = Auth.auth().addStateDidChangeListener({ (auth, user) in
+            self.userId = user?.uid
+        })
     }
     
     fileprivate func setupBasic() {
@@ -65,7 +73,7 @@ class ViewController: UIViewController {
         submitButton.anchor(top: textField.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 32, left: 0, bottom: 0, right: 0), size: .init(width: 150, height: 50))
         submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         submitButton.setTitle("ボタンですよ", for: UIControl.State.normal)
-        submitButton.addTarget(self, action: #selector(addText), for: .touchUpInside)
+        submitButton.addTarget(self, action: #selector(addTitle), for: .touchUpInside)
         
         leftBarButton = UIBarButtonItem(title: "Sign In", style: .plain, target: self, action: #selector(ViewController.tappedLeftBarButton))
         
@@ -85,11 +93,7 @@ class ViewController: UIViewController {
     }
     
     // ボタンをクリックしたときのアクション
-    @objc private func addText() {
-        setTitle()
-    }
-    
-    func setTitle() {
+    @objc private func addTitle() {
         let inputText = textField.text ?? ""
         // Firestoreにデータを保存する
         if inputText != "" {
@@ -97,9 +101,9 @@ class ViewController: UIViewController {
             // 配列に値を追加
             titlesArray.append(inputText)
             // Firestoreにデータを保存する
-            db.collection("topics").document(inputText).setData(["title": inputText]) { err in
-                if let err = err {
-                    print("Error adding document: \(err)")
+            db.collection("users").document(userId!).collection("topics").addDocument(data: ["title": inputText]) { error in
+                if let error = error {
+                    print("Error adding document: \(error)")
                 } else {
                     print("save OK")
                 }
@@ -206,7 +210,7 @@ extension ViewController: UITableViewDelegate {
 }
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        setTitle()
+        addTitle()
         // キーボードを閉じる
         textField.resignFirstResponder()
         return true
