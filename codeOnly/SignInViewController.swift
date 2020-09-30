@@ -16,6 +16,7 @@ class SignInViewController: UIViewController {
     fileprivate var passwordTextField = UITextField()
     fileprivate let signUpButton = UIButton()
     fileprivate let signInButton = UIButton()
+    fileprivate var resultLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,7 @@ class SignInViewController: UIViewController {
         serupTextField()
         setupSignUpButton()
         setupSignInButton()
+        setResultLabel()
 
     }
     fileprivate func setupBasic() {
@@ -47,7 +49,7 @@ class SignInViewController: UIViewController {
         passwordTextField.frame.size.height = 30
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.backgroundColor = .white
-
+        passwordTextField.isSecureTextEntry = true
         passwordTextField.placeholder = "パスワード"
         signInStackView.addArrangedSubview(passwordTextField)
     }
@@ -73,26 +75,29 @@ class SignInViewController: UIViewController {
         print("登録します。")
         if emailTextField.text != nil && passwordTextField.text != nil {
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authResult, error) in
-                if let error = error {
-                    print(error)
-                } else {
-                    print("新規登録成功！")
-                }
+                guard error == nil else { return }
+                guard let uid = authResult?.user.uid else { return }
+                Firestore.firestore().collection("users").document(uid).setData([:]) // userの空データを作る
+                self.resultLabel.text = "新規登録完了しました"
+                print("新規登録成功！")
             }
         }
-
     }
     @objc func SignIn() {
         print("ログインします。")
         if emailTextField.text != nil && passwordTextField.text != nil {
-            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { [weak self] authResult, error in
-//              guard let strongSelf = self else { return }
-                    print("ログイン成功！")
-                }
+            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authResult, error) in
+                guard error == nil else { return }
+                self.resultLabel.text = "ログインしました"
+                print("ログイン成功！")
+            }
         }
-
     }
 
+    func setResultLabel() {
+        view.addSubview(resultLabel)
+        resultLabel.anchor(top: signInButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 30, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 30))
+    }
 
     /*
     // MARK: - Navigation
