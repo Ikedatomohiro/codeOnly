@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var rightBarButton: UIBarButtonItem!
     fileprivate var handle:AuthStateDidChangeListenerHandle?
-    fileprivate var userId:String? = ""
+    fileprivate let userId = Auth.auth().currentUser?.uid
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +37,7 @@ class ViewController: UIViewController {
         self.navigationItem.title = "Top Page"
 
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        handle = Auth.auth().addStateDidChangeListener({ (auth, user) in
-            self.userId = user?.uid
-        })
-    }
-    
+
     fileprivate func setupBasic() {
         view.backgroundColor = .white
     }
@@ -117,17 +111,25 @@ class ViewController: UIViewController {
     
     // データを取得する
     func fetchTitleData() {
-        db.collection("topics").getDocuments() {(querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data()["title"]!)")
-                    self.titlesArray.append(document.data()["title"] as! String)
-                    self.tableView.reloadData()
+        
+//        if userId != "" {
+        db.collection("users").document(userId!).collection("topics").getDocuments() {(querySnapshot, err) in
+                    print("get data1")
+
+                if let err = err {
+                    print("get data2")
+
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        print("get data3")
+                        print("\(document.documentID) => \(document.data()["title"]!)")
+                        self.titlesArray.append(document.data()["title"] as! String)
+                        self.tableView.reloadData()
+                    }
                 }
             }
-        }
+//        }
         // 新しく更新があったときにデータを取得する
 //        db.collection("topics").addSnapshotListener{ querySnapshot, error in
 //            guard let documents = querySnapshot?.documents else {

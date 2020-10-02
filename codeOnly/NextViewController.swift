@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseFirestore
+import Firebase
 
 class NextViewController: UIViewController {
 
@@ -17,6 +17,8 @@ class NextViewController: UIViewController {
     fileprivate var topicSubmitButton = UIButton()
     fileprivate var messageText = UITextField()
     fileprivate let db = Firestore.firestore()
+    fileprivate var handle:AuthStateDidChangeListenerHandle?
+    fileprivate var userId:String? = ""
 
     init(titleText: String?) {
         self.titleText = titleText
@@ -36,6 +38,12 @@ class NextViewController: UIViewController {
         setupMessageTextField()
         setTopicData()
         navigationItem.title = "NextView"
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        handle = Auth.auth().addStateDidChangeListener({ (auth, user) in
+            self.userId = user?.uid
+        })
     }
     
     func setupTextField() {
@@ -71,7 +79,7 @@ class NextViewController: UIViewController {
     @objc func updateTopic() {
         let title = titleTextField.text ?? ""
         let comment = commentTextView.text ?? ""
-        db.collection("topics").document(titleText!).setData(["title": title, "comment": comment]) { err in
+        db.collection("users").document(userId!).collection("topics").document("mqpmhz9S9J3KD78nXlNg").setData(["title": title, "comment": comment]) { err in
             if let err = err {
                 print(err)
             } else {
