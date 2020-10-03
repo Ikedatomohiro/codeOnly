@@ -16,6 +16,7 @@ class SignInViewController: UIViewController {
     fileprivate var passwordTextField = UITextField()
     fileprivate let signUpButton = UIButton()
     fileprivate let signInButton = UIButton()
+    fileprivate let signOutButton = UIButton()
     fileprivate var resultLabel = UILabel()
     
     override func viewDidLoad() {
@@ -24,6 +25,7 @@ class SignInViewController: UIViewController {
         serupTextField()
         setupSignUpButton()
         setupSignInButton()
+        setupSignOutButton()
         setResultLabel()
 
     }
@@ -68,7 +70,14 @@ class SignInViewController: UIViewController {
         signInButton.anchor(top: signUpButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top:10, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
         signInButton.backgroundColor = .purple
         signInButton.addTarget(self, action: #selector(SignIn), for: .touchUpInside)
+    }
 
+    func setupSignOutButton() {
+        view.addSubview(signOutButton)
+        signOutButton.setTitle("ログアウト", for: UIControl.State.normal)
+        signOutButton.anchor(top: signInButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top:10, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
+        signOutButton.backgroundColor = .systemBlue
+        signOutButton.addTarget(self, action: #selector(SignOut), for: .touchUpInside)
     }
 
     @objc func createUser() {
@@ -94,9 +103,22 @@ class SignInViewController: UIViewController {
         }
     }
 
+    @objc func SignOut() {
+        print("ログアウトします。")
+        if Auth.auth().currentUser != nil {
+            do {
+                try Auth.auth().signOut()
+                self.resultLabel.text = "ログアウトしました"
+            } catch let error  {
+                self.resultLabel.text = "ログアウトに失敗しました"
+                print(error)
+            }
+        }
+    }
+
     func setResultLabel() {
         view.addSubview(resultLabel)
-        resultLabel.anchor(top: signInButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 30, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 30))
+        resultLabel.anchor(top: signOutButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 30, left: 0, bottom: 0, right: 0), size: .init(width: 200, height: 30))
     }
 
     /*

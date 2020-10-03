@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var rightBarButton: UIBarButtonItem!
     fileprivate var handle:AuthStateDidChangeListenerHandle?
-    fileprivate let userId = Auth.auth().currentUser?.uid
+    fileprivate var userId = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,16 @@ class ViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchTitleData()
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            if auth.currentUser != nil {
+                self.userId = Auth.auth().currentUser!.uid
+                self.fetchTitleData()
+            } else {
+                print("ログインしていません")
+                self.titlesArray = []
+                self.tableView.reloadData()
+            }
+        }
     }
     
     fileprivate func setupBasic() {
@@ -91,13 +100,15 @@ class ViewController: UIViewController {
     // ボタンをクリックしたときのアクション
     @objc private func addTitle() {
         let inputText = textField.text ?? ""
+        if userId == "" {
+            label.text = "ログインしてね。"
         // Firestoreにデータを保存する
-        if inputText != "" {
+        } else if inputText != "" {
             label.text = inputText + "を記録したよ。"
             // 配列に値を追加
             titlesArray.append(inputText)
             // Firestoreにデータを保存する
-            db.collection("users").document(userId!).collection("topics").addDocument(data: ["title": inputText]) { error in
+            db.collection("users").document(userId).collection("topics").addDocument(data: ["title": inputText]) { error in
                 if let error = error {
                     print("Error adding document: \(error)")
                 } else {
@@ -106,16 +117,17 @@ class ViewController: UIViewController {
             }
             textField.text = ""
             tableView.reloadData()
-        } else {
+        }   else {
             label.text = "なにか文字を入れてね。"
         }
     }
     
     // データを取得する
     func fetchTitleData() {
-        titlesArray = [String]()
-//        if userId != "" {
-        db.collection("users").document(userId!).collection("topics").getDocuments() {(querySnapshot, err) in
+        titlesArray = []
+        print("データ取ります。")
+        print("userIdありました")
+            db.collection("users").document(userId).collection("topics").getDocuments() {(querySnapshot, err) in
                     print("get data1")
 
                 if let err = err {
@@ -131,17 +143,6 @@ class ViewController: UIViewController {
                     }
                 }
             }
-//        }
-        // 新しく更新があったときにデータを取得する
-//        db.collection("topics").addSnapshotListener{ querySnapshot, error in
-//            guard let documents = querySnapshot?.documents else {
-//                print("Error fetching documents: \(error!)")
-//                return
-//            }
-//            let titles = documents.map { $0["title"]! }
-//            print("Current cities in CA: \(titles)")
-//        }
-        
     }
     
     // ボタンをタップしたときのアクション
@@ -156,10 +157,6 @@ class ViewController: UIViewController {
 //        present(stackVC, animated: true, completion: nil)
         self.navigationController?.pushViewController(stackVC, animated: true)
     }
-
-    
-
-
 }
 
 extension ViewController: UITableViewDataSource {
