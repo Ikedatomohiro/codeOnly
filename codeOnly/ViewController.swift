@@ -31,13 +31,15 @@ class ViewController: UIViewController {
         setupLabel()
         setupTextField()
         setupButtons()
-        setupTableView()
-        fetchTitleData()
-        
+        setupTableView()        
         self.navigationItem.title = "Top Page"
 
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchTitleData()
+    }
+    
     fileprivate func setupBasic() {
         view.backgroundColor = .white
     }
@@ -111,7 +113,7 @@ class ViewController: UIViewController {
     
     // データを取得する
     func fetchTitleData() {
-        
+        titlesArray = [String]()
 //        if userId != "" {
         db.collection("users").document(userId!).collection("topics").getDocuments() {(querySnapshot, err) in
                     print("get data1")
