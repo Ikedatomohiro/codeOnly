@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     fileprivate let db = Firestore.firestore()
     fileprivate var docRef: DocumentReference? = nil
     fileprivate var titlesArray = [String]()
+    fileprivate var titlesDictionary:[Dictionary<String, Any>] = []
     fileprivate var leftBarButton: UIBarButtonItem!
     fileprivate var rightBarButton: UIBarButtonItem!
     fileprivate var handle:AuthStateDidChangeListenerHandle?
@@ -126,23 +127,24 @@ class ViewController: UIViewController {
     func fetchTitleData() {
         titlesArray = []
         print("データ取ります。")
-        print("userIdありました")
-            db.collection("users").document(userId).collection("topics").getDocuments() {(querySnapshot, err) in
-                    print("get data1")
+        db.collection("users").document(userId).collection("topics").getDocuments() {(querySnapshot, err) in
+                print("get data1")
+            if let err = err {
+                print("get data2")
 
-                if let err = err {
-                    print("get data2")
-
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        print("get data3")
-                        print("\(document.documentID) => \(document.data()["title"]!)")
-                        self.titlesArray.append(document.data()["title"] as! String)
-                        self.tableView.reloadData()
-                    }
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    print("get data3")
+                    print("\(document.documentID) => \(document.data()["title"]!)")
+                    self.titlesDictionary.append(["topicID": document.documentID, "title": document.data()["title"] as! String])
+//                    self.titlesDictionary.append(["topicID": "fdas;lkjlafj", "title": "あああああああ"])
+                    self.titlesArray.append(document.data()["title"] as! String)
+                    self.tableView.reloadData()
+                    print(self.titlesDictionary)
                 }
             }
+        }
     }
     
     // ボタンをタップしたときのアクション
@@ -168,7 +170,8 @@ extension ViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
-        cell.textLabel?.text = titlesArray[indexPath.row]
+        print(titlesDictionary[indexPath.row]["title"]!)
+        cell.textLabel?.text = titlesDictionary[indexPath.row]["title"]! as? String
         cell.selectionStyle = .none
         return cell
     }
