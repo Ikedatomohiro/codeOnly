@@ -138,7 +138,6 @@ class ViewController: UIViewController {
                     print("get data3")
                     print("\(document.documentID) => \(document.data()["title"]!)")
                     self.titlesDictionary.append(["topicID": document.documentID, "title": document.data()["title"] as! String])
-//                    self.titlesDictionary.append(["topicID": "fdas;lkjlafj", "title": "あああああああ"])
                     self.titlesArray.append(document.data()["title"] as! String)
                     self.tableView.reloadData()
                     print(self.titlesDictionary)
@@ -183,8 +182,12 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 次のページにデータを送信する
-        let nextViewController = NextViewController(titleText: titlesArray[indexPath.row])
-//        nextViewController.modalPresentationStyle = .fullScreen
+//        var topicData = ["topicID":titlesDictionary[indexPath.row]["topicID"] as? String, "titleText":titlesDictionary[indexPath.row]["title"]! as? String]
+//        let nextViewController = NextViewController(coder: topicData)
+//        let nextViewController = NextViewController(titleText: titlesArray[indexPath.row])
+        // topicIDを送信して、NextViewControllerで内容を取得する。
+        let nextViewController = NextViewController(topicId: titlesDictionary[indexPath.row]["topicID"] as! String)
+        nextViewController.modalPresentationStyle = .fullScreen
 //        present(nextViewController, animated: true, completion: nil)
 //        nextViewController.setup(user: User(id: 0, name: "text"))
         self.navigationController?.pushViewController(nextViewController, animated: true)

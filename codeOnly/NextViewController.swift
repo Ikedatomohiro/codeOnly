@@ -11,6 +11,7 @@ import Firebase
 
 class NextViewController: UIViewController {
 
+    fileprivate var topicId: String?
     fileprivate var titleText: String?
     fileprivate var titleTextField = UITextField()
     fileprivate var commentTextView = UITextView()
@@ -24,6 +25,11 @@ class NextViewController: UIViewController {
         self.titleText = titleText
         super.init(nibName: nil, bundle: nil)
         print(titleText as Any)
+    }
+    init(topicId: String?) {
+        self.topicId = topicId
+        super.init(nibName: nil, bundle: nil)
+        print(topicId as Any)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
