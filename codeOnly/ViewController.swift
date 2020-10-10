@@ -197,9 +197,18 @@ extension ViewController: UITableViewDelegate {
     // スワイプしたセルを削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete { // .deleteでもいいみたい
+            // セルから文字を削除
             titlesArray.remove(at: indexPath.row)
+            // Firestoreのデータを削除
+            let targetTopicID = titlesDictionary[indexPath.row]["topicID"]
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
-            print("削除しました")
+            db.collection("users").document(userId).collection("topics").document(targetTopicID as! String).delete(){ err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                }
+            }
         }
     }
     
