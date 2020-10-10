@@ -15,24 +15,13 @@ class StackViewController: UIViewController {
     let label2 = UILabel()
     let label3 = UILabel()
     let testSwitch = UISwitch()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .brown
 
         setLabels()
-        
-        view.addSubview(testSwitch)
-        testSwitch.frame.origin = CGPoint(x: 100, y:100)
-                
-        // The second UISwitch is turned on by default.
-        testSwitch.setOn(true, animated: true)
-        
-        // Register a function to process second UISwitch's value changed event.
-        testSwitch.addTarget(self, action: #selector(turnSecondSwitch), for: UIControl.Event.valueChanged)
-        
-        // Add the second UISwitch to the screen root view.
-        self.view.addSubview(testSwitch)
+        setTestSwitch()
     }
     
     func setLabels() {
@@ -47,7 +36,7 @@ class StackViewController: UIViewController {
         view.addSubview(label1)
         label1.textColor = UIColor.lightGray
         label1.text = "スタックビュー"
-        label1.frame.size.width = 100
+        label1.frame.size.width = 200
         label1.frame.size.height = 30
         stackView.addArrangedSubview(label1)
 
@@ -67,22 +56,31 @@ class StackViewController: UIViewController {
         
     }
     
+    func setTestSwitch() {
+        view.addSubview(testSwitch)
+        testSwitch.frame.origin = CGPoint(x: 100, y:100)
+                
+        // The second UISwitch is turned on by default.
+        testSwitch.setOn(true, animated: true)
+        
+        // Register a function to process second UISwitch's value changed event.
+        testSwitch.addTarget(self, action: #selector(turnSecondSwitch), for: UIControl.Event.valueChanged)
+
+    }
+    
     @objc func turnSecondSwitch(srcObj: UISwitch){
         
-        // Get second UISwitch current status.
-        let switchStatus:Bool = srcObj.isOn
-        
-        // Change the label text and first UISwitch status accordingly.
-        if(switchStatus){
-            label1.text = "Second switch is turned on"
+        // スイッチがオンのときはオフにする
+        if(srcObj.isOn == true){
+            label1.text = "switch on"
             
-            testSwitch.setOn(false, animated: true)
+//            testSwitch.setOn(true, animated: true)
+            // スイッチがオフのときはオンにする
         }else{
-            label1.text = "Second switch is turned off"
+            label1.text = "switch off"
             
-            testSwitch.setOn(true, animated: true)
+//            testSwitch.setOn(false, animated: true)
         }
-        
     }
 
     /*
