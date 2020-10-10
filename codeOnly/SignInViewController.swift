@@ -34,9 +34,9 @@ class SignInViewController: UIViewController {
     }
     func serupTextField() {
         view.addSubview(signInStackView)
-        signInStackView.axis = .horizontal
+        signInStackView.axis = .vertical
         signInStackView.spacing = 10.0
-        signInStackView.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 100, left: 0, bottom: 0, right: 0), size: .init(width: 300, height: 30))
+        signInStackView.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 100, left: 0, bottom: 0, right: 0), size: .init(width: 300, height: 80))
         
         view.addSubview(emailTextField)
         emailTextField.frame.size.width = 100
@@ -61,6 +61,7 @@ class SignInViewController: UIViewController {
         signUpButton.setTitle("新規登録", for: UIControl.State.normal)
         signUpButton.anchor(top: signInStackView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top:10, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
         signUpButton.backgroundColor = .systemPink
+        signUpButton.layer.cornerRadius = 10
         signUpButton.addTarget(self, action: #selector(createUser), for: .touchUpInside)
 
     }
@@ -69,14 +70,16 @@ class SignInViewController: UIViewController {
         signInButton.setTitle("ログイン", for: UIControl.State.normal)
         signInButton.anchor(top: signUpButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top:10, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
         signInButton.backgroundColor = .purple
+        signInButton.layer.cornerRadius = 10
         signInButton.addTarget(self, action: #selector(SignIn), for: .touchUpInside)
     }
 
     func setupSignOutButton() {
         view.addSubview(signOutButton)
         signOutButton.setTitle("ログアウト", for: UIControl.State.normal)
-        signOutButton.anchor(top: signInButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top:10, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
+        signOutButton.anchor(top: signInButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top:10, left: 0, bottom: 0, right: 0), size: .init(width: 120, height: 40))
         signOutButton.backgroundColor = .systemBlue
+        signOutButton.layer.cornerRadius = 10
         signOutButton.addTarget(self, action: #selector(SignOut), for: .touchUpInside)
     }
 
