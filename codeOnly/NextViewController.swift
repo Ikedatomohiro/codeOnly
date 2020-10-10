@@ -88,12 +88,11 @@ class NextViewController: UIViewController {
     func setTopicData() {
         db.collection("users").document(userId!).collection("topics").document(topicId!).getDocument { (document, error) in
             if error != nil {
-                print(error)
+                print("エラーが発生しました。")
+                print(error!)
             } else {
-                let dataDescription = document?.data().map(String.init(describing:)) ?? "nil"
-                print("Document data: \(dataDescription)")
-//                print(document?.data()?.description as Any)
-//                print(document!.data()!["title"] as! Any)
+                self.titleTextField.text = document?.data()!["title"] as? String
+                self.commentTextView.text = document?.data()!["comment"] as? String
             }
         }
     }    
@@ -101,7 +100,7 @@ class NextViewController: UIViewController {
     @objc func updateTopic() {
         let title = titleTextField.text ?? ""
         let comment = commentTextView.text ?? ""
-        db.collection("users").document(userId!).collection("topics").document("mqpmhz9S9J3KD78nXlNg").setData(["title": title, "comment": comment]) { err in
+        db.collection("users").document(userId!).collection("topics").document(topicId!).setData(["title": title, "comment": comment]) { err in
             if let err = err {
                 print(err)
             } else {
