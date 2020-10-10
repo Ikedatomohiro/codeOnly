@@ -132,19 +132,13 @@ class ViewController: UIViewController {
         titlesArray = []
         print("データ取ります。")
         db.collection("users").document(userId).collection("topics").getDocuments() {(querySnapshot, err) in
-                print("get data1")
             if let err = err {
-                print("get data2")
-
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
-                    print("get data3")
-                    print("\(document.documentID) => \(document.data()["title"]!)")
                     self.titlesDictionary.append(["topicID": document.documentID, "title": document.data()["title"] as! String])
                     self.titlesArray.append(document.data()["title"] as! String)
                     self.tableView.reloadData()
-                    print(self.titlesDictionary)
                 }
             }
         }
@@ -173,8 +167,7 @@ extension ViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
-        print(titlesDictionary[indexPath.row]["title"]!)
-        cell.textLabel?.text = titlesDictionary[indexPath.row]["title"]! as? String
+        cell.textLabel?.text = titlesArray[indexPath.row] as String
         cell.selectionStyle = .none
         return cell
     }
@@ -190,7 +183,7 @@ extension ViewController: UITableViewDelegate {
 //        let nextViewController = NextViewController(coder: topicData)
 //        let nextViewController = NextViewController(titleText: titlesArray[indexPath.row])
         // topicIDを送信して、NextViewControllerで内容を取得する。
-        let nextViewController = NextViewController(topicId: titlesDictionary[indexPath.row]["topicID"] as! String)
+        let nextViewController = NextViewController(topicId: (titlesDictionary[indexPath.row]["topicID"] as! String))
         nextViewController.modalPresentationStyle = .fullScreen
 //        present(nextViewController, animated: true, completion: nil)
 //        nextViewController.setup(user: User(id: 0, name: "text"))
