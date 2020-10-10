@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class NextViewController: UIViewController {
 
@@ -19,7 +20,7 @@ class NextViewController: UIViewController {
     fileprivate var messageText = UITextField()
     fileprivate let db = Firestore.firestore()
     fileprivate var handle:AuthStateDidChangeListenerHandle?
-    fileprivate var userId:String? = ""
+    fileprivate var userId:String? = Auth.auth().currentUser?.uid
 
     init(titleText: String?) {
         self.titleText = titleText
@@ -38,6 +39,7 @@ class NextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .yellow
+        logInCheck()
         setupTextField()
         setupCommentTextView()
         setupTopicSubmitButton()
@@ -47,11 +49,17 @@ class NextViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        handle = Auth.auth().addStateDidChangeListener({ (auth, user) in
-            self.userId = user?.uid
-        })
     }
-    
+    func logInCheck() {
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            if auth.currentUser != nil {
+                self.userId = Auth.auth().currentUser!.uid
+                print(self.userId!)
+            } else {
+                print("ログインしていません")
+            }
+        }
+    }
     func setupTextField() {
         view.addSubview(titleTextField)
         titleTextField.text = titleText
@@ -60,7 +68,7 @@ class NextViewController: UIViewController {
         titleTextField.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 12, left: 10, bottom: 0, right: 0), size: .init(width: 150, height: 30))
         titleTextField.backgroundColor = .white
     }
-    
+
     func setupCommentTextView() {
         view.addSubview(commentTextView)
         commentTextView.frame = CGRect(x: 0 , y: 20 , width: 200, height: 200)
@@ -68,7 +76,7 @@ class NextViewController: UIViewController {
         commentTextView.anchor(top: titleTextField.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 10), size: .init(width: 200, height: 100))
         commentTextView.backgroundColor = .white
     }
-    
+
     func setupTopicSubmitButton() {
         view.addSubview(topicSubmitButton)
         topicSubmitButton.anchor(top: commentTextView.layoutMarginsGuide.bottomAnchor, leading: view.layoutMarginsGuide.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 0), size: .init(width: 100, height: 30))
@@ -76,12 +84,20 @@ class NextViewController: UIViewController {
         topicSubmitButton.setTitle("更新", for: UIControl.State.normal)
         topicSubmitButton.addTarget(self, action: #selector(updateTopic), for: .touchUpInside)
     }
-    
-    func setTopicData() {
-        let data = db.collection("topics").document(titleText!)
-        dump(data)
-    }
 
+    func setTopicData() {
+        db.collection("users").document(userId!).collection("topics").document(topicId!).getDocument { (document, error) in
+            if error != nil {
+                print(error)
+            } else {
+                let dataDescription = document?.data().map(String.init(describing:)) ?? "nil"
+                print("Document data: \(dataDescription)")
+//                print(document?.data()?.description as Any)
+//                print(document!.data()!["title"] as! Any)
+            }
+        }
+    }    
+    
     @objc func updateTopic() {
         let title = titleTextField.text ?? ""
         let comment = commentTextView.text ?? ""
@@ -93,8 +109,6 @@ class NextViewController: UIViewController {
                 self.messageText.text = "こうしんしました。"
             }
         }
-        
-        
     }
     
     func setupMessageTextField() {

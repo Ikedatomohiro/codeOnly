@@ -38,6 +38,10 @@ class ViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        logInCheck()
+    }
+    
+    func logInCheck() {
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             if auth.currentUser != nil {
                 self.userId = Auth.auth().currentUser!.uid
