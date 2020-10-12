@@ -100,12 +100,16 @@ class NextViewController: UIViewController {
     @objc func updateTopic() {
         let title = titleTextField.text ?? ""
         let comment = commentTextView.text ?? ""
-        db.collection("users").document(userId!).collection("topics").document(topicId!).setData(["title": title, "comment": comment]) { err in
-            if let err = err {
-                print(err)
-            } else {
-                print("更新しました。")
-                self.messageText.text = "こうしんしました。"
+        if title == "" || comment == "" {
+            self.messageText.text = "空欄はだめだよ"
+        } else {
+            db.collection("users").document(userId!).collection("topics").document(topicId!).updateData(["title": title, "comment": comment]) { err in
+                if let err = err {
+                    print(err)
+                } else {
+                    print("更新しました。")
+                    self.messageText.text = "こうしんしました。"
+                }
             }
         }
     }

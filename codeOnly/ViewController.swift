@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     fileprivate var rightBarButton: UIBarButtonItem!
     fileprivate var handle:AuthStateDidChangeListenerHandle?
     fileprivate var userId = String()
+    fileprivate var topicData = Topic()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,11 +118,12 @@ class ViewController: UIViewController {
                 if let error = error {
                     print("Error adding document: \(error)")
                 } else {
+                    
                     print("save OK")
                 }
             }
             textField.text = ""
-            tableView.reloadData()
+            fetchTitleData()
         }   else {
             label.text = "なにか文字を入れてね。"
         }
@@ -129,7 +131,7 @@ class ViewController: UIViewController {
     
     // データを取得する
     func fetchTitleData() {
-        titlesArray = []
+        titlesDictionary = []
         print("データ取ります。")
         db.collection("users").document(userId).collection("topics").getDocuments() {(querySnapshot, err) in
             if let err = err {
@@ -137,7 +139,8 @@ class ViewController: UIViewController {
             } else {
                 for document in querySnapshot!.documents {
                     self.titlesDictionary.append(["topicID": document.documentID, "title": document.data()["title"] as! String])
-                    self.titlesArray.append(document.data()["title"] as! String)
+                    
+
                     self.tableView.reloadData()
                 }
             }
@@ -163,11 +166,12 @@ extension ViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titlesArray.count
+        return titlesDictionary.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
-        cell.textLabel?.text = titlesArray[indexPath.row] as String
+//        cell.textLabel?.text = titlesArray[indexPath.row] as String
+        cell.textLabel?.text = titlesDictionary[indexPath.row]["title"] as? String
         cell.selectionStyle = .none
         return cell
     }
@@ -197,8 +201,6 @@ extension ViewController: UITableViewDelegate {
     // スワイプしたセルを削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete { // .deleteでもいいみたい
-            // セルから文字を削除
-            titlesArray.remove(at: indexPath.row)
             // Firestoreのデータを削除
             let targetTopicID = titlesDictionary[indexPath.row]["topicID"]
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
@@ -206,6 +208,8 @@ extension ViewController: UITableViewDelegate {
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {
+                    // Firestoreのデータ削除がOKだったら、セルを削除
+                    self.titlesDictionary.remove(at: indexPath.row)
                     print("Document successfully removed!")
                 }
             }
