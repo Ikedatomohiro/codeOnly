@@ -6,21 +6,30 @@
 //  Copyright © 2020 Tomohiro Ikeda. All rights reserved.
 //
 
+import Firebase
+
 struct Topic {
-    
+    let id: String
     let title: String
     let comment: String
-    let topicID: String
-    var topicData: [Dictionary<String, Any>]
-    var topicDataArray:[String]
+//    var topicData: [Dictionary<String, Any>]
+//    var topicDataArray:[String]
     
-    init() {
-        topicID = ""
-        title = ""
-        comment = ""
-        topicData = []
-        topicDataArray = []
+//    init() {
+//        id = ""
+//        title = ""
+//        comment = ""
+////        topicData = []
+////        topicDataArray = []
+//    }
+    
+    init(document: QueryDocumentSnapshot) {
+        let dictionary = document.data()
+        self.id = document.documentID
+        self.title = dictionary["title"] as? String ?? ""
+        self.comment = dictionary["comment"] as? String ?? ""
     }
+
     
 //    func setTopicData(topicID:String, title:String) {
 //        topicData["topicID"] = topicID

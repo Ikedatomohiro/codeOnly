@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A08E28278014DC884F7A9D23 /* Pods_codeOnly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3305440DFCF80BCF158217AB /* Pods_codeOnly.framework */; };
+		C546B1132535CBE900B94A27 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546B1122535CBE900B94A27 /* TopicCell.swift */; };
 		C57E9BB024FE68F0005AD40B /* LayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E9BAF24FE68F0005AD40B /* LayoutController.swift */; };
 		C57E9BB324FE73BB005AD40B /* Anchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E9BB224FE73BB005AD40B /* Anchor.swift */; };
 		C57E9BB524FE743B005AD40B /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E9BB424FE743B005AD40B /* NSObject.swift */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		3305440DFCF80BCF158217AB /* Pods_codeOnly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_codeOnly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA279D8ECF1994704394FE4 /* Pods-codeOnly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-codeOnly.debug.xcconfig"; path = "Target Support Files/Pods-codeOnly/Pods-codeOnly.debug.xcconfig"; sourceTree = "<group>"; };
+		C546B1122535CBE900B94A27 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		C57E9BAF24FE68F0005AD40B /* LayoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutController.swift; sourceTree = "<group>"; };
 		C57E9BB224FE73BB005AD40B /* Anchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anchor.swift; sourceTree = "<group>"; };
 		C57E9BB424FE743B005AD40B /* NSObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				E5941612251F0BB1006A0632 /* StackViewController.swift */,
 				E5941616251F8D2F006A0632 /* CollectionViewController.swift */,
 				E5C7C5242522AA32008BD99B /* SignInViewController.swift */,
+				C546B1122535CBE900B94A27 /* TopicCell.swift */,
 			);
 			path = codeOnly;
 			sourceTree = "<group>";
@@ -145,7 +148,7 @@
 				E5849ED224F54CA600103260 /* Sources */,
 				E5849ED324F54CA600103260 /* Frameworks */,
 				E5849ED424F54CA600103260 /* Resources */,
-				9D9FEDEC1F75578A1E6BF6E0 /* [CP] Embed Pods Frameworks */,
+				00443AC0632026D00E898B56 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -163,7 +166,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1160;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Tomohiro Ikeda";
 				TargetAttributes = {
 					E5849ED524F54CA600103260 = {
@@ -203,6 +206,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		00443AC0632026D00E898B56 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-codeOnly/Pods-codeOnly-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-codeOnly/Pods-codeOnly-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-codeOnly/Pods-codeOnly-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2EFFFF3BD273E5AEE7A92433 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -225,23 +245,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9D9FEDEC1F75578A1E6BF6E0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-codeOnly/Pods-codeOnly-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-codeOnly/Pods-codeOnly-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-codeOnly/Pods-codeOnly-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -253,6 +256,7 @@
 				E5849EDE24F54CA600103260 /* ViewController.swift in Sources */,
 				E5849EEE24F6A82100103260 /* NextViewController.swift in Sources */,
 				C57E9BB524FE743B005AD40B /* NSObject.swift in Sources */,
+				C546B1132535CBE900B94A27 /* TopicCell.swift in Sources */,
 				E5B13B2A25139A6F003DDD34 /* TabBarViewController.swift in Sources */,
 				E571011225066C1E00E6FA4C /* Topic.swift in Sources */,
 				E5849EDA24F54CA600103260 /* AppDelegate.swift in Sources */,
@@ -304,6 +308,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -328,7 +333,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -364,6 +369,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -382,7 +388,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -400,6 +406,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FP9CY3NG95;
 				INFOPLIST_FILE = codeOnly/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -419,6 +426,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FP9CY3NG95;
 				INFOPLIST_FILE = codeOnly/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
