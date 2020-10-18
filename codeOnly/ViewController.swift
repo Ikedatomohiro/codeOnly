@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
+// TopicsController
 class ViewController: UIViewController {
     fileprivate let label = UILabel()
     fileprivate let tableView = UITableView()
@@ -24,7 +25,9 @@ class ViewController: UIViewController {
     fileprivate var rightBarButton: UIBarButtonItem!
     fileprivate var handle:AuthStateDidChangeListenerHandle?
     fileprivate var userId = String()
-    fileprivate var topicData = Topic()
+//    fileprivate var topicData = Topic()
+    
+    fileprivate var topics = [Topic]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +103,7 @@ class ViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.className) // ←
+        tableView.register(TopicCell.self, forCellReuseIdentifier: TopicCell.className) // ←
     }
     
     // ボタンをクリックしたときのアクション
@@ -134,6 +137,11 @@ class ViewController: UIViewController {
         titlesDictionary = []
         print("データ取ります。")
         db.collection("users").document(userId).collection("topics").getDocuments() {(querySnapshot, err) in
+            guard let documents = querySnapshot?.documents else { return }
+            self.topics = documents.map { (document) ->Topic in
+                return Topic(document: document)
+            }
+            self.tableView.reloadData()
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -166,12 +174,13 @@ extension ViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titlesDictionary.count
+        return topics.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.className) else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TopicCell.className) as? TopicCell else { fatalError("improper UITableViewCell")} // ←これはなんだ？？テーブル
 //        cell.textLabel?.text = titlesArray[indexPath.row] as String
-        cell.textLabel?.text = titlesDictionary[indexPath.row]["title"] as? String
+//        cell.textLabel?.text = topics[indexPath.row]["title"] as? String
+        cell.setup(topic: topics[indexPath.row])
         cell.selectionStyle = .none
         return cell
     }
@@ -187,7 +196,7 @@ extension ViewController: UITableViewDelegate {
 //        let nextViewController = NextViewController(coder: topicData)
 //        let nextViewController = NextViewController(titleText: titlesArray[indexPath.row])
         // topicIDを送信して、NextViewControllerで内容を取得する。
-        let nextViewController = NextViewController(topicId: (titlesDictionary[indexPath.row]["topicID"] as! String))
+        let nextViewController = NextViewController(topic: topics[indexPath.row])
         nextViewController.modalPresentationStyle = .fullScreen
 //        present(nextViewController, animated: true, completion: nil)
 //        nextViewController.setup(user: User(id: 0, name: "text"))

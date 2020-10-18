@@ -10,10 +10,12 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
+// TopicController
 class NextViewController: UIViewController {
 
-    fileprivate var topicId: String?
-    fileprivate var titleText: String?
+//    fileprivate var topicId: String?
+//    fileprivate var titleText: String?
+    fileprivate let topic: Topic
     fileprivate var titleTextField = UITextField()
     fileprivate var commentTextView = UITextView()
     fileprivate var topicSubmitButton = UIButton()
@@ -22,15 +24,19 @@ class NextViewController: UIViewController {
     fileprivate var handle:AuthStateDidChangeListenerHandle?
     fileprivate var userId:String? = Auth.auth().currentUser?.uid
 
-    init(titleText: String?) {
-        self.titleText = titleText
+//    init(titleText: String?) {
+//        self.titleText = titleText
+//        super.init(nibName: nil, bundle: nil)
+//        print(titleText as Any)
+//    }
+//    init(topicId: String?) {
+//        self.topicId = topicId
+//        super.init(nibName: nil, bundle: nil)
+//        print(topicId as Any)
+//    }
+    init(topic: Topic) {
+        self.topic = topic
         super.init(nibName: nil, bundle: nil)
-        print(titleText as Any)
-    }
-    init(topicId: String?) {
-        self.topicId = topicId
-        super.init(nibName: nil, bundle: nil)
-        print(topicId as Any)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -62,7 +68,8 @@ class NextViewController: UIViewController {
     }
     func setupTextField() {
         view.addSubview(titleTextField)
-        titleTextField.text = titleText
+        titleTextField.text = topic.title
+//        titleTextField.text = titleText
         titleTextField.frame = CGRect(x: 0 , y: 20 , width: 200, height: 100)
 
         titleTextField.anchor(top: view.layoutMarginsGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 12, left: 10, bottom: 0, right: 0), size: .init(width: 150, height: 30))
@@ -86,7 +93,7 @@ class NextViewController: UIViewController {
     }
 
     func setTopicData() {
-        db.collection("users").document(userId!).collection("topics").document(topicId!).getDocument { (document, error) in
+        db.collection("users").document(userId!).collection("topics").document(topic.id).getDocument { (document, error) in
             if error != nil {
                 print("エラーが発生しました。")
                 print(error!)
@@ -103,7 +110,7 @@ class NextViewController: UIViewController {
         if title == "" || comment == "" {
             self.messageText.text = "空欄はだめだよ"
         } else {
-            db.collection("users").document(userId!).collection("topics").document(topicId!).updateData(["title": title, "comment": comment]) { err in
+            db.collection("users").document(userId!).collection("topics").document(topic.id).updateData(["title": title, "comment": comment]) { err in
                 if let err = err {
                     print(err)
                 } else {
