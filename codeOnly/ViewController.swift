@@ -52,7 +52,8 @@ class ViewController: UIViewController {
                 self.fetchTitleData()
             } else {
                 print("ログインしていません")
-                self.titlesArray = []
+                self.topics = [Topic]()
+                self.setupLabel()
                 self.tableView.reloadData()
             }
         }
