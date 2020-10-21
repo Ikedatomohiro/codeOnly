@@ -1,5 +1,5 @@
 //
-//  NextViewController.swift
+//  TopicDetailController.swift
 //  codeOnly
 //
 //  Created by 池田友宏 on 2020/08/26.
@@ -10,8 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-// TopicController
-class NextViewController: UIViewController {
+class TopicDetailController: UIViewController {
 
 //    fileprivate var topicId: String?
 //    fileprivate var titleText: String?
@@ -141,7 +140,7 @@ struct User {
 //    }
 }
 
-extension NextViewController: UITextFieldDelegate {
+extension TopicDetailController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

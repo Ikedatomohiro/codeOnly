@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TopicsController.swift
 //  codeOnly
 //
 //  Created by 池田友宏 on 2020/08/25.
@@ -10,8 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
-// TopicsController
-class ViewController: UIViewController {
+class TopicsController: UIViewController {
     fileprivate let label = UILabel()
     fileprivate let tableView = UITableView()
     fileprivate let textField = UITextField()
@@ -90,9 +89,9 @@ class ViewController: UIViewController {
         submitButton.setTitle("ボタンですよ", for: UIControl.State.normal)
         submitButton.addTarget(self, action: #selector(addTitle), for: .touchUpInside)
         
-        leftBarButton = UIBarButtonItem(title: "Sign In", style: .plain, target: self, action: #selector(ViewController.tappedLeftBarButton))
+        leftBarButton = UIBarButtonItem(title: "Sign In", style: .plain, target: self, action: #selector(TopicsController.tappedLeftBarButton))
         
-        rightBarButton = UIBarButtonItem(title: "Stack", style: .plain, target: self, action: #selector(ViewController.tappedRightBarButton))
+        rightBarButton = UIBarButtonItem(title: "Stack", style: .plain, target: self, action: #selector(TopicsController.tappedRightBarButton))
         
         self.navigationItem.leftBarButtonItem = leftBarButton
         self.navigationItem.rightBarButtonItem = rightBarButton
@@ -170,7 +169,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension TopicsController: UITableViewDataSource {
     func numberOfSections(in sampleTableView: UITableView) -> Int {
         return 1
     }
@@ -190,14 +189,14 @@ extension ViewController: UITableViewDataSource {
         return 44
     }
 }
-extension ViewController: UITableViewDelegate {
+extension TopicsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 次のページにデータを送信する
 //        var topicData = ["topicID":titlesDictionary[indexPath.row]["topicID"] as? String, "titleText":titlesDictionary[indexPath.row]["title"]! as? String]
 //        let nextViewController = NextViewController(coder: topicData)
 //        let nextViewController = NextViewController(titleText: titlesArray[indexPath.row])
         // topicIDを送信して、NextViewControllerで内容を取得する。
-        let nextViewController = NextViewController(topic: topics[indexPath.row])
+        let nextViewController = TopicDetailController(topic: topics[indexPath.row])
         nextViewController.modalPresentationStyle = .fullScreen
 //        present(nextViewController, animated: true, completion: nil)
 //        nextViewController.setup(user: User(id: 0, name: "text"))
@@ -237,7 +236,7 @@ extension ViewController: UITableViewDelegate {
 //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //    }
 }
-extension ViewController: UITextFieldDelegate {
+extension TopicsController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         addTitle()
         // キーボードを閉じる

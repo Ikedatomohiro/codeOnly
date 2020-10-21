@@ -13,7 +13,7 @@ import UIKit
 class TabBarViewController: UITabBarController {
     
     fileprivate let nav1VC = UINavigationController(rootViewController: CollectionViewController())
-    fileprivate let nav2VC = UINavigationController(rootViewController: ViewController())
+    fileprivate let nav2VC = UINavigationController(rootViewController: TopicsController())
     fileprivate let nav3VC = UINavigationController(rootViewController: StackViewController())
     
     override func viewDidLoad() {
