@@ -91,7 +91,7 @@ class TopicsController: UIViewController {
         
         leftBarButton = UIBarButtonItem(title: "Sign In", style: .plain, target: self, action: #selector(TopicsController.tappedLeftBarButton))
         
-        rightBarButton = UIBarButtonItem(title: "Stack", style: .plain, target: self, action: #selector(TopicsController.tappedRightBarButton))
+        rightBarButton = UIBarButtonItem(title: "Pencil", style: .plain, target: self, action: #selector(TopicsController.tappedRightBarButton))
         
         self.navigationItem.leftBarButtonItem = leftBarButton
         self.navigationItem.rightBarButtonItem = rightBarButton
@@ -163,9 +163,9 @@ class TopicsController: UIViewController {
 
     // ボタンをタップしたときのアクション
     @objc func tappedRightBarButton() {
-        let stackVC = StackViewController()
+        let pencilVC = PencilViewController()
 //        present(stackVC, animated: true, completion: nil)
-        self.navigationController?.pushViewController(stackVC, animated: true)
+        self.navigationController?.pushViewController(pencilVC, animated: true)
     }
 }
 

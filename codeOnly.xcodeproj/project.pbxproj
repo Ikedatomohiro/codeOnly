@@ -23,6 +23,7 @@
 		E5941613251F0BB1006A0632 /* StackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5941612251F0BB1006A0632 /* StackViewController.swift */; };
 		E5941617251F8D2F006A0632 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5941616251F8D2F006A0632 /* CollectionViewController.swift */; };
 		E5B13B2A25139A6F003DDD34 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B13B2925139A6E003DDD34 /* TabBarViewController.swift */; };
+		E5B6CA1325404D4500AC0AD8 /* PencilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B6CA1225404D4500AC0AD8 /* PencilViewController.swift */; };
 		E5C7C5252522AA32008BD99B /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7C5242522AA32008BD99B /* SignInViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		E5941612251F0BB1006A0632 /* StackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
 		E5941616251F8D2F006A0632 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		E5B13B2925139A6E003DDD34 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		E5B6CA1225404D4500AC0AD8 /* PencilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilViewController.swift; sourceTree = "<group>"; };
 		E5C7C5242522AA32008BD99B /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				C57E9BB124FE73AF005AD40B /* Extensions */,
 				E5849ED924F54CA600103260 /* AppDelegate.swift */,
 				E5849EDB24F54CA600103260 /* SceneDelegate.swift */,
+				E5B6CA1225404D4500AC0AD8 /* PencilViewController.swift */,
 				E5849EDD24F54CA600103260 /* TopicsController.swift */,
 				E5849EED24F6A82100103260 /* TopicDetailController.swift */,
 				E5B13B2925139A6E003DDD34 /* TabBarViewController.swift */,
@@ -253,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C57E9BB024FE68F0005AD40B /* LayoutController.swift in Sources */,
+				E5B6CA1325404D4500AC0AD8 /* PencilViewController.swift in Sources */,
 				E5849EDE24F54CA600103260 /* TopicsController.swift in Sources */,
 				E5849EEE24F6A82100103260 /* TopicDetailController.swift in Sources */,
 				C57E9BB524FE743B005AD40B /* NSObject.swift in Sources */,
