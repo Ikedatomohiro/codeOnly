@@ -211,17 +211,19 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete { // .deleteでもいいみたい
             // Firestoreのデータを削除
-            let targetTopicID = titlesDictionary[indexPath.row]["topicID"]
-            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
-            db.collection("users").document(userId).collection("topics").document(targetTopicID as! String).delete(){ err in
+            let targetTopicID = topics[indexPath.row].id
+            db.collection("users").document(userId).collection("topics").document(targetTopicID).delete(){ err in
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {
                     // Firestoreのデータ削除がOKだったら、セルを削除
-                    self.titlesDictionary.remove(at: indexPath.row)
                     print("Document successfully removed!")
                 }
             }
+            // topicsの配列削除とtableViewの削除はこの順でないといけない。
+            // dbの削除が上にあるのに先に下が呼ばれるようだ。なぜ？？
+            self.topics.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
         }
     }
     
